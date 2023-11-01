@@ -1,6 +1,8 @@
 package main
 
+
 import (
+	"strings"
 	"fmt"
 	"os/exec"
 	"time"
@@ -76,13 +78,19 @@ func processMidi(msg midi.Message, timestampms int32) {
 
 		val, ok := config[ID]
 		if ok {
-			cmd := exec.Command(val)
+
+			// Pass anything after a space as parameters
+			s := strings.Split(val, " ")
+			cmd := exec.Command(s[0], s[1:]...)
+
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 			err := cmd.Run()
 			if err != nil {
 				panic(err)
 			}
+		} else {
+			fmt.Println("No command configured for ID:", ID)
 		}
 
 	// case msg.GetNoteEnd(&ch, &key):
