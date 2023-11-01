@@ -1,5 +1,5 @@
 {
-  description = "A simple Go package";
+  description = "Midi Commander - Execute stuff on MIDI commands";
 
   # Nixpkgs / NixOS version to use.
   # inputs.nixpkgs.url = "nixpkgs/nixos-21.11";
