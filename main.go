@@ -1,10 +1,9 @@
 package main
 
-
 import (
-	"strings"
 	"fmt"
 	"os/exec"
+	// "strings"
 	"time"
 
 	// Midi
@@ -79,13 +78,10 @@ func processMidi(msg midi.Message, timestampms int32) {
 		val, ok := config[ID]
 		if ok {
 
-			// Pass anything after a space as parameters
-			s := strings.Split(val, " ")
-			cmd := exec.Command(s[0], s[1:]...)
-
+			cmd := exec.Command("sh", "-c", val)
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
-			err := cmd.Run()
+			err := cmd.Start()
 			if err != nil {
 				panic(err)
 			}

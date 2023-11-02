@@ -1,5 +1,6 @@
 {
 	"channel-0-note-C4": "./test-script.sh 'c4'",
-	"channel-0-note-D4": "./test-script.sh 'd4'",
-	"channel-0-note-E4": "./test-script.sh"
+	"channel-0-note-D4": "./test-script.sh",
+	"channel-0-note-E4": "foot",
+	"channel-0-note-F4": "foot &"
 }
