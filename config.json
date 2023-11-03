@@ -1,6 +1,21 @@
 {
-	"channel-0-note-C4": "./test-script.sh 'c4'",
-	"channel-0-note-D4": "./test-script.sh",
-	"channel-0-note-E4": "foot",
-	"channel-0-note-F4": "foot &"
+
+	"cc-controller-9-channel-0": "./script-knobs.sh",
+	"cc-controller-10-channel-0":"./script-knobs.sh",
+	"cc-controller-11-channel-0":"./script-knobs.sh",
+	"cc-controller-12-channel-0":"./script-knobs.sh",
+	"cc-controller-13-channel-0":"./script-knobs.sh",
+	"cc-controller-14-channel-0":"./script-knobs.sh",
+	"cc-controller-15-channel-0":"./script-knobs.sh",
+	"cc-controller-16-channel-0":"./script-knobs.sh",
+
+	"midi-channel-0-note-E3":  "/bin/sh -c 'wpctl set-mute @DEFAULT_SOURCE@ toggle'",
+	"midi-channel-0-note-F3":  "./script-pads.sh",
+	"midi-channel-0-note-Gb3": "./script-pads.sh",
+	"midi-channel-0-note-G3":  "./script-pads.sh",
+	"midi-channel-0-note-C3":  "./script-pads.sh",
+	"midi-channel-0-note-Db3": "./script-pads.sh",
+	"midi-channel-0-note-D3":  "./script-pads.sh",
+	"midi-channel-0-note-Eb3": "./script-pads.sh"
+
 }

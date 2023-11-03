@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"os/exec"
-	// "strings"
+	"strings"
 	"time"
 
 	// Midi
@@ -61,37 +61,50 @@ func main() {
 	stop()
 }
 
+func runCmdForID(ID string, values []string) {
+
+	cmdExe, ok := config[ID]
+	param := fmt.Sprintf("%s %s", cmdExe, strings.Join(values, " "))
+
+	if ok {
+
+		cmd := exec.Command("/bin/sh", "-c", param)
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+		err := cmd.Start()
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		fmt.Println("No command configured for ID:", ID)
+	}
+
+}
+
 func processMidi(msg midi.Message, timestampms int32) {
 
 	var bt []byte
-	var ch, key, vel uint8
+	var ch, key, controller, value, vel uint8
 
 	switch {
+	case msg.GetControlChange(&ch, &controller, &value):
+		ID := fmt.Sprintf("cc-controller-%v-channel-%v", controller, ch)
+		runCmdForID(ID, []string{
+			fmt.Sprintf("%v", ch),
+			fmt.Sprintf("%v", controller),
+			fmt.Sprintf("%v", value),
+		})
 	case msg.GetSysEx(&bt):
 		fmt.Printf("got sysex: % X\n SYSEX NOT SUPPORTED YET\n", bt)
 	case msg.GetNoteStart(&ch, &key, &vel):
-		// fmt.Printf("starting note %s on channel %v with velocity %v\n", midi.Note(key), ch, vel)
-		ID := fmt.Sprintf("channel-%v-note-%s", ch, midi.Note(key))
-
-		// fmt.Println("ID is: ", ID)
-
-		val, ok := config[ID]
-		if ok {
-
-			cmd := exec.Command("sh", "-c", val)
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-			err := cmd.Start()
-			if err != nil {
-				panic(err)
-			}
-		} else {
-			fmt.Println("No command configured for ID:", ID)
-		}
-
-	// case msg.GetNoteEnd(&ch, &key):
-	// 	fmt.Printf("ending note %s on channel %v\n", midi.Note(key), ch)
+		ID := fmt.Sprintf("midi-channel-%v-note-%s", ch, midi.Note(key))
+		runCmdForID(ID,
+			[]string{
+				fmt.Sprintf("%v", ch),
+				fmt.Sprintf("%s", midi.Note(key)),
+				fmt.Sprintf("%v", vel)})
 	default:
-		// ignore
+		//ignore
+		// fmt.Printf("got unknow message: %v ", msg)
 	}
 }
