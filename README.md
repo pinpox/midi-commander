@@ -2,7 +2,6 @@
 
 Execute shell scripts when a MIDI note is played.
 
-
 ## Configuration
 
 The following environment variables are expected to be set:
@@ -18,5 +17,6 @@ The config has the following format:
 {
     "channel-0-note-C4": "./test-script1.sh"
     "channel-0-note-D4": "./test-script2.sh"
+	"midi-channel-0-note-E3":  "/bin/sh -c 'wpctl set-mute @DEFAULT_SOURCE@ toggle'",
 }
 ```
