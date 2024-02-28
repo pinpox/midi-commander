@@ -36,7 +36,7 @@
             inherit version;
             src = ./.;
             buildInputs = with pkgs; [alsa-lib ];
-            vendorSha256 = "sha256-WWXmr2wsXlrUS0sLWVDY6C5H2tVfaO5XnwYwI0sGnx8=";
+            vendorHash = "sha256-WWXmr2wsXlrUS0sLWVDY6C5H2tVfaO5XnwYwI0sGnx8=";
           };
         });
 
